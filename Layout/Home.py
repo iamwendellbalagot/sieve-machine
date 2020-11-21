@@ -1,11 +1,13 @@
 import dash_core_components as dcc
 import dash_html_components as html
 
+from .plotGenerator import get_scatter
+
 home = html.Div(
 	className = 'home',
 	children = [
 		html.Div(
-			className='home__right',
+			className='home__left',
 			children=[
 				html.Div(
 					className='home__leftControls',
@@ -14,11 +16,18 @@ home = html.Div(
 			]
 		),
 		html.Div(
-			className='home__left',
+			className='home__right',
 			children=[
 				html.Div(
 					className='home__rightPlot',
-					children ='This is a plot'
+					children =[
+						html.H2('LIVE PLOT'),
+						html.Hr(),
+						dcc.Graph(
+							id ='weights__plot',
+							figure=get_scatter()
+						)
+					]
 				),
 				html.Div(
 					className='home__rightWeights',
