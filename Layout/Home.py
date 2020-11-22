@@ -89,19 +89,19 @@ home = html.Div(
 										html.Li(
 											children=[
 												html.Span('Weight of Sample: '),
-												html.P('12 minutes')
+												html.P('25 Kg')
 											]
 										),
 										html.Li(
 											children=[
-												html.Span('Weight of Sample: '),
-												html.P('12 minutes')
+												html.Span('ARTW: '),
+												html.P('97')
 											]
 										),
 										html.Li(
 											children=[
-												html.Span('Weight of Sample: '),
-												html.P('12 minutes')
+												html.Span('Error: '),
+												html.P('56')
 											]
 										)
 									]

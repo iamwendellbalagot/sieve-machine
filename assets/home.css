@@ -56,6 +56,7 @@ fieldset {
 	width: 70%;
 	flex: 0.2;
 	border: 1px solid #7289da;
+	margin: 5px;
 }
 
 fieldset > div {
@@ -144,19 +145,29 @@ fieldset > legend {
 	margin: 0;
 }
 
+
 .controls__results > ul {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	margin: 5px 0;
 }
 
 .controls__results > ul > li {
 	display: flex;
 	list-style: none;
+	padding: 5px 0px;
+	font-size: 18px;
+}
+
+.controls__results > ul > li > span {
+	font-weight: bold;
 }
 
 .controls__results > ul > li > p {
 	margin: 0px;
+	margin-left: 10px;
+	color: #ccc;
 }
 
 /*========================
