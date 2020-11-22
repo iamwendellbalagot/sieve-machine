@@ -93,8 +93,70 @@ fieldset > div > button {
 	cursor: pointer;
 }
 
-.controls__createTest > legend {
+fieldset > legend {
 	font-weight: bold;
+}
+
+.controls__utilities > div{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
+}
+
+.controls__utilities > div > button {
+	align-self: center;
+	background-color: #03C4A1
+}
+
+.controls__utilities > div > span {
+	color: gray;
+	font-size: 13px;
+	font-weight: bold;
+	margin-top: 5px;
+}
+
+.controls__utilities > div > div {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #7289da;
+}
+
+.controls__utilities > div > div > button {
+	padding: 5px 10px;
+	border: none;
+	outline: none;
+	background-color: #7289da;
+	color: #fff;
+	cursor: pointer;
+}
+
+.controls__utilities > div > div > input {
+	flex: 1;
+	text-indent: 5px;
+	border: none;
+	outline: none;
+	background-color: #23272a;
+	color: #fff;
+	padding: 5px 0px;
+	margin: 0;
+}
+
+.controls__results > ul {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.controls__results > ul > li {
+	display: flex;
+	list-style: none;
+}
+
+.controls__results > ul > li > p {
+	margin: 0px;
 }
 
 /*========================

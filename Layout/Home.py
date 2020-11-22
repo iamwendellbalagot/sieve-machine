@@ -39,6 +39,74 @@ home = html.Div(
 									]
 								)
 							]
+						),
+						html.Fieldset(
+							className='controls__utilities',
+							children=[
+								html.Legend('UTILITIES'),
+								html.Div(
+									children=[
+										html.Span('CHECT TEST RESULTS:'),
+										html.Div(
+											children=[
+												html.Button('CHECK'),
+												dcc.Input(
+													id='input__checkTest',
+													type='text',
+													placeholder='Test ID'
+												)
+											]
+										),
+										html.Span('EXPORT DATA:'),
+										html.Div(
+											children=[
+												html.Button('EXPORT'),
+												dcc.Input(
+													id='input__exportTest',
+													type='text',
+													placeholder='Test ID'
+												)
+											]
+										),
+										html.Span('MOTOR CALIBRATION:'),
+										html.Button('CALIBRATE')
+									]
+								)
+							]
+						),
+						html.Fieldset(
+							className='controls__results',
+							children=[
+								html.Legend('RESULTS'),
+								html.Ul(
+									children=[
+										html.Li(
+											children=[
+												html.Span('Time: '),
+												html.P('12 minutes')
+											]
+										),
+										html.Li(
+											children=[
+												html.Span('Weight of Sample: '),
+												html.P('12 minutes')
+											]
+										),
+										html.Li(
+											children=[
+												html.Span('Weight of Sample: '),
+												html.P('12 minutes')
+											]
+										),
+										html.Li(
+											children=[
+												html.Span('Weight of Sample: '),
+												html.P('12 minutes')
+											]
+										)
+									]
+								)
+							]
 						)
 					]
 				)
