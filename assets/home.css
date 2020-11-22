@@ -30,7 +30,71 @@
 }
 
 .home__leftControls {
+	display: flex;
+	flex-direction: column;
 	flex: 1;
+	align-items: center;
+	width: 100%;
+}
+
+.home__leftControls  > hr {
+	width: 75%;
+	border-top: 1px solid gray;
+	opacity: 0.4;
+}
+
+.home__leftControls  > h2 {
+	margin-bottom: 0;
+	color: #03c4a1;
+}
+
+fieldset {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 70%;
+	flex: 0.2;
+	border: 1px solid #7289da;
+}
+
+fieldset > div {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+
+fieldset > div > input {
+	border-radius: 3px;
+	text-indent: 5px;
+	border: none;
+	outline: none;
+	margin-left: 10px;
+	background-color: #23272a;
+	color: #fff;
+	padding: 5px 10px;
+	width: 90%;
+	margin: 0;
+	margin-bottom: 10px;
+}
+
+fieldset > div > button {
+	width: 96%;
+	border: none;
+	outline: none;
+	color: #fff;
+	font-weight: bold;
+	background-color: #7289da;
+	padding: 10px 0;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.controls__createTest > legend {
+	font-weight: bold;
 }
 
 /*========================
@@ -49,6 +113,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	width: 100%;
 }
 
 .home__rightPlot  > h2 {
@@ -82,6 +147,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	width: 100%;
 }
 
 .home__rightWeights  > h2 {
@@ -90,7 +156,7 @@
 }
 
 .home__rightWeights  > hr {
-	width: 100%;
+	width: 75%;
 	border-top: 1px solid gray;
 	opacity: 0.4;
 }

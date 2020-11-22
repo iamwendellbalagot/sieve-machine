@@ -12,7 +12,34 @@ home = html.Div(
 				html.Div(
 					className='home__leftControls',
 					children=[
-						
+						html.H2('CONTROLS'),
+						html.Hr(),
+						html.Fieldset(
+							className='controls__createTest',
+							children=[
+								html.Legend('CREATE A TEST'),
+								html.Div(
+									children=[
+										dcc.Input(
+											id='input__testID',
+											type='text',
+											placeholder='Test ID'
+										),
+										dcc.Input(
+											id='input__sampleWeight',
+											type='number',
+											placeholder='Weight of Sample (Kg)'
+										),
+										dcc.Input(
+											id='input__time',
+											type='number',
+											placeholder='Minutes'
+										),
+										html.Button('START', id='btn__start')
+									]
+								)
+							]
+						)
 					]
 				)
 			]
