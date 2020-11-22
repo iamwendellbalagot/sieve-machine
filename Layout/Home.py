@@ -11,7 +11,9 @@ home = html.Div(
 			children=[
 				html.Div(
 					className='home__leftControls',
-					children='This is Controls'
+					children=[
+						
+					]
 				)
 			]
 		),
