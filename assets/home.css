@@ -1,5 +1,17 @@
+html {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
 .app {
 	margin: 0px;
+	display: flex;
 	font-family: sans-serif;
 	height: 100%;
 	overflow: hidden;
@@ -27,6 +39,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	border-top: 1px solid #99aab5;
 }
 
 .home__leftControls {
@@ -124,6 +137,7 @@ fieldset > legend {
 	justify-content: center;
 	border: 1px solid #7289da;
 }
+
 
 .controls__utilities > div > div > button {
 	padding: 5px 10px;
