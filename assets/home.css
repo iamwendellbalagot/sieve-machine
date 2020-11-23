@@ -120,7 +120,12 @@ fieldset > legend {
 
 .controls__utilities > div > button {
 	align-self: center;
-	background-color: #03C4A1
+	background-color: #03C4A1;
+}
+
+#btn__stopCalib {
+	background-color: salmon !important;
+	display: none;
 }
 
 .controls__utilities > div > span {

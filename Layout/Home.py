@@ -69,7 +69,14 @@ home = html.Div(
 											]
 										),
 										html.Span('MOTOR CALIBRATION:'),
-										html.Button('CALIBRATE')
+										html.Button(
+											id='btn__calibrate',
+											children='CALIBRATE'
+										),
+										html.Button(
+											id='btn__stopCalib',
+											children='STOP'
+										)
 									]
 								)
 							]
