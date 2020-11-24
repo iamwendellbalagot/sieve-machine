@@ -45,12 +45,18 @@ home = html.Div(
 									style={'display': 'none'},
 									children=[
 										html.Div(
-											html.H3('12:00')
+											html.H3('12:00', id='timer')
 										),
 										html.Button('STOP', id='btn__stopTest')
 									]
 								),
-								
+								html.Div(
+									id='createTest__again',
+									style={'display':'none'},
+									children=[
+										html.Button('CREATE ANOTHER TEST?', id='btn__againTest')
+									]
+								)
 							]
 						),
 						html.Fieldset(
@@ -201,6 +207,12 @@ home = html.Div(
 			n_intervals=0,
 			interval=1000,
 			disabled=True
+		),
+		dcc.Input(
+			id='dummy__timer',
+			type='number',
+			style={'display': 'none'},
+			value=1
 		)
 	]
 )
