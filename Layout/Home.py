@@ -54,7 +54,7 @@ home = html.Div(
 									id='createTest__again',
 									style={'display':'none'},
 									children=[
-										html.Button('CREATE ANOTHER TEST?', id='btn__againTest')
+										html.A(html.Button('CREATE ANOTHER TEST?', id='btn__againTest'), href='/')
 									]
 								)
 							]
