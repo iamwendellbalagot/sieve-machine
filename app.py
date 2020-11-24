@@ -37,6 +37,25 @@ app.layout = html.Div(
 	]
 )
 
+#START TEST CALLBACK
+@app.callback([Output('createTest__start', 'style'),
+	Output('createTest__stop', 'style')],
+	[Input('btn__startTest', 'n_clicks'),
+	 Input('btn__stopTest', 'n_clicks')])
+def callback__startTestUI(btn__start, btn__stop):
+	changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+	if 'btn__startTest' in changed_id:
+		time.sleep(1)
+		io.output(relay, False)
+		return {'display': 'none'}, {'display':'block'}
+	if 'btn__stopTest' in changed_id:
+		time.sleep(1)
+		io.output(relay, True)
+		return {'display': 'block'}, {'display':'none'}
+	else:
+		raise PreventUpdate()
+
+#CALIBRATION CALLBACK
 @app.callback([Output('btn__stopCalib', 'style'),
 	Output('btn__calibrate', 'style')],
 	[Input('btn__calibrate', 'n_clicks'),

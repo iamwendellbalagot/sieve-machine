@@ -21,7 +21,6 @@ home = html.Div(
 								html.Legend('CREATE A TEST'),
 								html.Div(
 									id = 'createTest__start',
-									style={'display':'none'},
 									children=[
 										dcc.Input(
 											id='input__testID',
@@ -43,6 +42,7 @@ home = html.Div(
 								),
 								html.Div(
 									id='createTest__stop',
+									style={'display': 'none'},
 									children=[
 										html.Div(
 											html.H3('12:00')
@@ -194,6 +194,13 @@ home = html.Div(
 					]
 				)
 			]
+		),
+		#INTERVALS
+		dcc.Interval(
+			id='interval__timer',
+			n_intervals=0,
+			interval=1000,
+			disabled=True
 		)
 	]
 )
