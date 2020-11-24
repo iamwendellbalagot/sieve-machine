@@ -80,6 +80,20 @@ fieldset > div {
 	align-items: center;
 }
 
+#createTest__stop > button {
+	background-color: salmon;
+}
+
+#createTest__stop > div {
+	width: 100%;
+}
+
+#createTest__stop > div > h3 {
+	padding:0px;
+	margin:5px 0px;
+	text-align: center;
+}
+
 
 fieldset > div > input {
 	border-radius: 3px;

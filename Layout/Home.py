@@ -1,4 +1,5 @@
 import dash_core_components as dcc
+import dash_bootstrap_components as dbc
 import dash_html_components as html
 
 from .plotGenerator import get_scatter
@@ -19,6 +20,8 @@ home = html.Div(
 							children=[
 								html.Legend('CREATE A TEST'),
 								html.Div(
+									id = 'createTest__start',
+									style={'display':'none'},
 									children=[
 										dcc.Input(
 											id='input__testID',
@@ -35,9 +38,19 @@ home = html.Div(
 											type='number',
 											placeholder='Minutes'
 										),
-										html.Button('START', id='btn__start')
+										html.Button('START', id='btn__startTest')
 									]
-								)
+								),
+								html.Div(
+									id='createTest__stop',
+									children=[
+										html.Div(
+											html.H3('12:00')
+										),
+										html.Button('STOP', id='btn__stopTest')
+									]
+								),
+								
 							]
 						),
 						html.Fieldset(
