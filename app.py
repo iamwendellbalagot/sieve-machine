@@ -92,11 +92,14 @@ def callback__timer (n, inp_time, n_st):
 
 #GENERATE DATA CALLBACK
 @app.callback(Output('btn__stopTest', 'children'),
-	[Input('interval__timer', 'disabled')])
-def callback__generateData(n_st):
+	[Input('interval__timer', 'disabled'),
+	 Input('input__testID', 'value'),
+	 Input('input__sampleWeight', 'value'),
+	 Input('input__time', 'value')])
+def callback__generateData(n_st, inp_id,inp_sampW, inp_timer):
 	#changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
 	if n_st == False:
-		getdata.generateData()
+		getdata.generateData(table=inp_id, sampWeight=inp_timer, timer=inp_sampW)
 		return no_update
 	else:
 		raise PreventUpdate()
