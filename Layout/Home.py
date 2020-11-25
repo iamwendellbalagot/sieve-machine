@@ -68,7 +68,7 @@ home = html.Div(
 										html.Span('CHECT TEST RESULTS:'),
 										html.Div(
 											children=[
-												html.Button('CHECK'),
+												html.Button('CHECK', id='btn__checkTest'),
 												dcc.Input(
 													id='input__checkTest',
 													type='text',

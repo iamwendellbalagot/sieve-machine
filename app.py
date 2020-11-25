@@ -17,6 +17,7 @@ from flaskwebgui import FlaskUI
 import getdata.getdata as getdata
 
 from Layout.Home import home
+import Layout.plotGenerator as pg
 
 relay = 16
 io.setwarnings(False)
@@ -102,6 +103,21 @@ def callback__generateData(n_st, inp_id,inp_sampW, inp_timer):
 		getdata.generateData(table=inp_id, sampWeight=inp_timer, timer=inp_sampW)
 		return no_update
 	else:
+		raise PreventUpdate()
+
+#GRAPH CALLBACK
+@app.callback(Output('weights__plot', 'figure'),
+	[Input('btn__checkTest', 'n_clicks'),
+	 Input('input__checkTest', 'value')])
+def callback__graph(btn_check, inp_check):
+	changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+	try:
+		if 'btn__checkTest' in changed_id:
+			print(getdata.get_dataframe(table=inp_check))
+			return pg.get_scatter(df=getdata.get_dataframe(table=inp_check))
+		else:
+			raise PreventUpdate()
+	except:
 		raise PreventUpdate()
 
 #CALIBRATION CALLBACK
