@@ -3,6 +3,10 @@ import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 
+import sys
+sys.path.insert(1, '/path/to/applicaiton/getdata')
+import getdata.getdata as getdata
+
 def get_scatter(df=None):
 
 	# if df is None:
@@ -25,6 +29,8 @@ def get_scatter(df=None):
 	# 	x = np.arange(len(df))
 	# 	y = df['S1']
 	# 	y1 = df['S2']
+	
+	print(getdata.get_dataframe())
 
 	x = [0, 50, 100, 200, 300, 400, 500, 600]
 	y1 = [0, 1.5, 2, 4, 7.5, 12.5, 20, 40.6]

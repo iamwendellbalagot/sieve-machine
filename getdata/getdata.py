@@ -16,6 +16,12 @@ hx5 = HX711(dout_pin=19, pd_sck_pin=21)
 hx6 = HX711(dout_pin=22, pd_sck_pin=24)
 hx7 = HX711(dout_pin=29, pd_sck_pin=31)
 
+def get_dataframe(table='test1'):
+        conn = sqlite3.connect(path)
+        df = pd.read_sql('SELECT * FROM {}'.format(table), con=conn)
+        conn.close()
+        return df
+
 def generateData(table , sampWeight, timer):
 	conn = sqlite3.connect(path)
 	
