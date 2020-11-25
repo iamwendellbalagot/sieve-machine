@@ -116,16 +116,41 @@ def callback__generateData(n_st, inp_id,inp_sampW, inp_timer):
 def callback__graph(btn_check, test_id, inp_check, n, n_st):
 	changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
 	try:
-		if n:
+		if n and n_st == False:
 			print('UPDATING')
 			return pg.get_scatter(df=getdata.get_dataframe(table=test_id))
 		if 'btn__checkTest' in changed_id:
-			print(getdata.get_dataframe(table=inp_check))
 			return pg.get_scatter(df=getdata.get_dataframe(table=inp_check))
 		else:
 			raise PreventUpdate()
 	except:
 		raise PreventUpdate()
+		
+#WEIGHTS CALLBACK
+@app.callback([Output('sieve1', 'children'),
+	Output('sieve2', 'children'),
+	Output('sieve3', 'children'),
+	Output('sieve4', 'children'),
+	Output('sieve5', 'children'),
+	Output('sieve6', 'children'),
+	Output('sieve7', 'children')],
+	[Input('input__testID', 'value'),
+	 Input('interval__graph', 'n_intervals'),
+	 Input('interval__graph', 'disabled')])
+def callback__weight(test_id, n , n_st):
+	try:
+		if n and n_st == False:
+			print('WEIGHING...')
+			df = getdata.get_dataframe(table=test_id)
+			return str(df['S1'].iloc[-1]) + ' grams', str(df['S2'].iloc[-1]) + ' grams', \
+				str(df['S3'].iloc[-1])+ ' grams', str(df['S4'].iloc[-1])+ ' grams', \
+				str(df['S5'].iloc[-1]) + ' grams', str(df['S6'].iloc[-1])+ ' grams', \
+				str(df['S7'].iloc[-1])+ ' grams'
+		else:
+			raise PreventUpdate()
+	except:
+		raise PreventUpdate()
+		
 
 #CALIBRATION CALLBACK
 @app.callback([Output('btn__stopCalib', 'style'),
