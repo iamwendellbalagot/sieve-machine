@@ -208,6 +208,12 @@ home = html.Div(
 			interval=1000,
 			disabled=True
 		),
+		dcc.Interval(
+			id='interval__graph',
+			n_intervals=0,
+			interval=5000,
+			disabled=True
+		),
 		dcc.Input(
 			id='dummy__timer',
 			type='number',

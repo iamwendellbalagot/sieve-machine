@@ -48,7 +48,8 @@ app.layout = html.Div(
 	Output('createTest__stop', 'style'),
 	Output('interval__timer', 'disabled'),
 	Output('interval__timer', 'max_intervals'),
-	Output('interval__timer', 'n_intervals')],
+	Output('interval__timer', 'n_intervals'),
+	Output('interval__graph', 'disabled')],
 	[Input('btn__startTest', 'n_clicks'),
 	 Input('btn__stopTest', 'n_clicks'),
 	 Input('input__testID', 'value'),
@@ -62,12 +63,12 @@ def callback__startTestUI(btn__start, btn__stop, test_id, test_weight, test_time
 		time.sleep(1)
 		getdata.process = True
 		io.output(relay, False)
-		return {'display': 'none'}, {'display':'block'}, False, test_time*60, 0
+		return {'display': 'none'}, {'display':'block'}, False, test_time*60, 0, False
 	if 'btn__stopTest' in changed_id:
 		time.sleep(1)
 		getdata.process = False
 		io.output(relay, True)
-		return {'display': 'block'}, {'display':'none'}, True, 0, 0
+		return {'display': 'block'}, {'display':'none'}, True, 0, 0, True
 	else:
 		raise PreventUpdate()
 		
@@ -108,10 +109,16 @@ def callback__generateData(n_st, inp_id,inp_sampW, inp_timer):
 #GRAPH CALLBACK
 @app.callback(Output('weights__plot', 'figure'),
 	[Input('btn__checkTest', 'n_clicks'),
-	 Input('input__checkTest', 'value')])
-def callback__graph(btn_check, inp_check):
+	 Input('input__testID', 'value'),
+	 Input('input__checkTest', 'value'),
+	 Input('interval__graph', 'n_intervals'),
+	 Input('interval__graph', 'disabled')])
+def callback__graph(btn_check, test_id, inp_check, n, n_st):
 	changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
 	try:
+		if n:
+			print('UPDATING')
+			return pg.get_scatter(df=getdata.get_dataframe(table=test_id))
 		if 'btn__checkTest' in changed_id:
 			print(getdata.get_dataframe(table=inp_check))
 			return pg.get_scatter(df=getdata.get_dataframe(table=inp_check))
