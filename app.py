@@ -78,13 +78,16 @@ def callback__startTestUI(btn__start, btn__stop, test_id, test_weight, test_time
 	 Output('btn__stopTest', 'disabled')],
 	[Input('interval__timer', 'n_intervals'),
 	 Input('input__time', 'value'),
-	 Input('interval__timer', 'disabled')])
-def callback__timer (n, inp_time, n_st):
+	 Input('interval__timer', 'disabled'),
+	 Input('input__testID', 'value'),
+	 Input('input__sampleWeight', 'value')])
+def callback__timer (n, inp_time, n_st, table, sampWeight ):
 	try:
 		if n == inp_time*60 and n_st==False:
 			io.output(relay, True)
 			time.sleep(5)
 			getdata.process = False
+			getdata.addResult(table=table, sampWeight=inp_sampW, timer=inp_time)
 			return str(datetime.timedelta(seconds=inp_time*60 - n)), {'display':'block'}, True
 		if n:
 			return str(datetime.timedelta(seconds=inp_time*60 - n)), no_update, no_update
@@ -103,6 +106,7 @@ def callback__generateData(n_st, inp_id,inp_sampW, inp_timer):
 	#changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
 	if n_st == False:
 		getdata.generateData(table=inp_id, sampWeight=inp_sampW, timer=inp_timer)
+		getdata.addResult(table=inp_id, sampWeight=inp_sampW, timer=inp_timer)
 		return no_update
 	else:
 		raise PreventUpdate()
