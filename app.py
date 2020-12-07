@@ -65,9 +65,9 @@ def callback__startTestUI(btn__start, btn__stop, test_id, test_weight, test_time
 		io.output(relay, False)
 		return {'display': 'none'}, {'display':'block'}, False, test_time*60, 0, False
 	if 'btn__stopTest' in changed_id:
-		time.sleep(1)
-		getdata.process = False
 		io.output(relay, True)
+		time.sleep(5)
+		getdata.process = False
 		return {'display': 'block'}, {'display':'none'}, True, 0, 0, True
 	else:
 		raise PreventUpdate()
@@ -83,6 +83,7 @@ def callback__timer (n, inp_time, n_st):
 	try:
 		if n == inp_time*60 and n_st==False:
 			io.output(relay, True)
+			time.sleep(5)
 			getdata.process = False
 			return str(datetime.timedelta(seconds=inp_time*60 - n)), {'display':'block'}, True
 		if n:
@@ -101,7 +102,7 @@ def callback__timer (n, inp_time, n_st):
 def callback__generateData(n_st, inp_id,inp_sampW, inp_timer):
 	#changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
 	if n_st == False:
-		getdata.generateData(table=inp_id, sampWeight=inp_timer, timer=inp_sampW)
+		getdata.generateData(table=inp_id, sampWeight=inp_sampW, timer=inp_timer)
 		return no_update
 	else:
 		raise PreventUpdate()
@@ -112,8 +113,10 @@ def callback__generateData(n_st, inp_id,inp_sampW, inp_timer):
 	 Input('input__testID', 'value'),
 	 Input('input__checkTest', 'value'),
 	 Input('interval__graph', 'n_intervals'),
-	 Input('interval__graph', 'disabled')])
-def callback__graph(btn_check, test_id, inp_check, n, n_st):
+	 Input('interval__graph', 'disabled'),
+	 Input('btn__exportTest', 'n_clicks'),
+	 Input('input__exportTest', 'value')])
+def callback__graph(btn_check, test_id, inp_check, n, n_st, btn_export, inp_export):
 	changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
 	try:
 		if n and n_st == False:
@@ -121,6 +124,13 @@ def callback__graph(btn_check, test_id, inp_check, n, n_st):
 			return pg.get_scatter(df=getdata.get_dataframe(table=test_id))
 		if 'btn__checkTest' in changed_id:
 			return pg.get_scatter(df=getdata.get_dataframe(table=inp_check))
+		if 'btn__exportTest' in changed_id:
+			#print(inp_export)
+			#print(getdata.generateXL(table=inp_export))
+			data = getdata.generateXL(table=inp_export)
+			data = data.round(2)
+			data.to_csv('./csv_files/' + inp_export + '.csv', index=False, header=True)
+			return no_update
 		else:
 			raise PreventUpdate()
 	except:
@@ -142,14 +152,15 @@ def callback__weight(test_id, n , n_st):
 		if n and n_st == False:
 			print('WEIGHING...')
 			df = getdata.get_dataframe(table=test_id)
-			return str(df['S1'].iloc[-1]) + ' grams', str(df['S2'].iloc[-1]) + ' grams', \
-				str(df['S3'].iloc[-1])+ ' grams', str(df['S4'].iloc[-1])+ ' grams', \
-				str(df['S5'].iloc[-1]) + ' grams', str(df['S6'].iloc[-1])+ ' grams', \
-				str(df['S7'].iloc[-1])+ ' grams'
+			return str(df['S1'].iloc[-1]) + ' kg', str(df['S2'].iloc[-1]) + ' kg', \
+				str(df['S3'].iloc[-1])+ ' kg', str(df['S4'].iloc[-1])+ ' kg', \
+				str(df['S5'].iloc[-1]) + ' kg', str(df['S6'].iloc[-1])+ ' kg', \
+				str(df['S7'].iloc[-1])+ ' kg'
 		else:
 			raise PreventUpdate()
 	except:
 		raise PreventUpdate()
+		
 		
 
 #CALIBRATION CALLBACK

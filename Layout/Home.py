@@ -79,7 +79,7 @@ home = html.Div(
 										html.Span('EXPORT DATA:'),
 										html.Div(
 											children=[
-												html.Button('EXPORT'),
+												html.Button('EXPORT', id = 'btn__exportTest'),
 												dcc.Input(
 													id='input__exportTest',
 													type='text',
@@ -163,15 +163,15 @@ home = html.Div(
 									children=[
 										html.Li([
 											html.Span('Sieve 1:'),
-											html.P('100 grams', id='sieve1')
+											html.P('0.0 kg', id='sieve1')
 										]),
 										html.Li([
 											html.Span('Sieve 2:'),
-											html.P('100 grams', id='sieve2')
+											html.P('0.0 kg', id='sieve2')
 										]),
 										html.Li([
 											html.Span('Sieve 3:'),
-											html.P('100 grams', id='sieve3')
+											html.P('0.0 kg', id='sieve3')
 										])
 									]
 								),
@@ -179,15 +179,15 @@ home = html.Div(
 									children=[
 										html.Li([
 											html.Span('Sieve 4:'),
-											html.P('100 grams', id='sieve4')
+											html.P('0.0 kg', id='sieve4')
 										]),
 										html.Li([
 											html.Span('Sieve 5:'),
-											html.P('1200 grams', id='sieve5')
+											html.P('0.0 kg', id='sieve5')
 										]),
 										html.Li([
 											html.Span('Sieve 6:'),
-											html.P('0 grams', id='sieve6')
+											html.P('0.0 kg', id='sieve6')
 										])
 									]
 								),
@@ -195,7 +195,7 @@ home = html.Div(
 						),
 						html.Li([
 							html.Span('Sieve 7:'),
-							html.P('100 grams', id='sieve7')
+							html.P('0.0 kg', id='sieve7')
 						]),
 					]
 				)
@@ -211,7 +211,7 @@ home = html.Div(
 		dcc.Interval(
 			id='interval__graph',
 			n_intervals=0,
-			interval=5000,
+			interval=1000,
 			disabled=True
 		),
 		dcc.Input(

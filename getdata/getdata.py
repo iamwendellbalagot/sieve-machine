@@ -3,7 +3,7 @@ from .hx711 import HX711  # import the class HX711
 import sqlite3
 import pandas as pd
 import numpy as np
-
+import time
 process = True
 path = 'database/server.db'
 
@@ -16,12 +16,34 @@ hx5 = HX711(dout_pin=19, pd_sck_pin=21)
 hx6 = HX711(dout_pin=22, pd_sck_pin=24)
 hx7 = HX711(dout_pin=29, pd_sck_pin=31)
 
-def get_dataframe(table='test1'):
+hx1.set_scale_ratio(-8.54)
+hx2.set_scale_ratio(-4.32)
+hx3.set_scale_ratio(89.61) 
+hx4.set_scale_ratio(107.65) #5.46
+hx5.set_scale_ratio(-43.70)
+hx6.set_scale_ratio(56.61)
+hx7.set_scale_ratio(21.1)
+
+def get_dataframe(table='test'):
         conn = sqlite3.connect(path)
         df = pd.read_sql('SELECT * FROM {}'.format(table), con=conn)
         conn.close()
         return df
-
+        
+def generateXL(table='test'):
+	conn = sqlite3.connect(path)
+	df = pd.read_sql('SELECT * FROM {}'.format(table), con=conn)
+	data = pd.DataFrame(columns = ['Coarse Sieve', 'Weight Retained', 'Commulative WR %', 'Passing %'])
+	sieve_sizes = ['3 in' , '2.5 in', '1.5 in', '1 in', '0.75 in', '0.5 in', 'PAN']
+	data['Coarse Sieve'] = sieve_sizes
+	weight_retained = [df['S1'].iloc[-1], df['S2'].iloc[-1], df['S3'].iloc[-1], df['S4'].iloc[-1],
+		df['S5'].iloc[-1], df['S6'].iloc[-1], df['S7'].iloc[-1]]
+	data['Weight Retained'] = weight_retained
+	data['Weight Retained'] = (data['Weight Retained'] / df['Sample_Weight'].iloc[-1]) * 100
+	data['Commulative WR %'] = data['Weight Retained'].cumsum()
+	data['Passing %'] = 100 - data['Commulative WR %']
+	print(data[['Weight Retained', 'Commulative WR %', 'Passing %']])
+	return data
 def generateData(table , sampWeight, timer):
 	conn = sqlite3.connect(path)
 	
@@ -35,15 +57,31 @@ def generateData(table , sampWeight, timer):
 		print(process)
 		while process:
 			print('generate')
-			sen1 = hx1.get_data_mean(readings=1) + np.random.randint(1000)
-			sen2 = hx2.get_data_mean(readings=1) + np.random.randint(700)
-			sen3 = hx3.get_data_mean(readings=1) + np.random.randint(600)
-			sen4 = hx4.get_data_mean(readings=1) + np.random.randint(400)
-			sen5 = hx5.get_data_mean(readings=1) + np.random.randint(400)
-			sen6 = hx6.get_data_mean(readings=1) + np.random.randint(300)
-			sen7 = hx7.get_data_mean(readings=1) + np.random.randint(200)
+			#sen1 = round(hx1.get_weight_mean(readings=5) / 1000,2)
+			#sen2 = round(hx2.get_weight_mean(readings=5) / 1000,2) 
+			#sen3 = round(hx3.get_weight_mean(readings=5) / 1000,2) 
+			#sen4 = round(hx4.get_weight_mean(readings=5) / 1000,2) 
+			#sen5 = round(hx5.get_weight_mean(readings=5) / 1000,2) 
+			#sen6 = round(hx6.get_weight_mean(readings=5) / 1000,2) 
+			#sen7 = round(hx7.get_weight_mean(readings=5) / 1000,2) 
+			#time.sleep(0.5)
+			sen1 = round((hx1.get_weight_mean(readings=5)-5800) / 1000,2)
+			sen2 = round((hx2.get_weight_mean(readings=5)-5800) / 1000,2) 
+			sen3 = round((hx3.get_weight_mean(readings=5)-6800) / 1000,2) 
+			sen4 = round((hx4.get_weight_mean(readings=5)-7100) / 1000,2) 
+			sen5 = round((hx5.get_weight_mean(readings=5)-8000) / 1000,2) 
+			sen6 = round((hx6.get_weight_mean(readings=5)-8900) / 1000,2) 
+			sen7 = round((hx7.get_weight_mean(readings=5)-7400) / 1000,2)
+			data = [sen1, sen2, sen3, sen4, sen5, sen6, sen7]
 			
-			c.execute('INSERT INTO '+ table +' VALUES(?,?,?,?,?,?,?,?,?);',(sen1, sen2, sen3, sen4, sen5, sen6, sen7, sampWeight, timer));
+			for i in range(0,7):
+					if data[i] < 0:
+						data[i] = 0
+			data.append(sampWeight)
+			data.append(timer)
+			time.sleep(0.5)  
+			
+			c.execute('INSERT INTO '+ table +' VALUES(?,?,?,?,?,?,?,?,?);', tuple(data));
 			conn.commit()
 			if process == False:
 				break
@@ -67,15 +105,23 @@ def generateData(table , sampWeight, timer):
 		c.execute(query)
 		while process:
 			print('generate2')
-			sen1 = hx1.get_data_mean(readings=1) + np.random.randint(1000)
-			sen2 = hx2.get_data_mean(readings=1) + np.random.randint(700)
-			sen3 = hx3.get_data_mean(readings=1) + np.random.randint(600)
-			sen4 = hx4.get_data_mean(readings=1) + np.random.randint(400)
-			sen5 = hx5.get_data_mean(readings=1) + np.random.randint(400)
-			sen6 = hx6.get_data_mean(readings=1) + np.random.randint(300)
-			sen7 = hx7.get_data_mean(readings=1) + np.random.randint(200)
+			sen1 = round((hx1.get_weight_mean(readings=5)-5800) / 1000,2)
+			sen2 = round((hx2.get_weight_mean(readings=5)-5800) / 1000,2) 
+			sen3 = round((hx3.get_weight_mean(readings=5)-6800) / 1000,2) 
+			sen4 = round((hx4.get_weight_mean(readings=5)-7100) / 1000,2) 
+			sen5 = round((hx5.get_weight_mean(readings=5)-8000) / 1000,2) 
+			sen6 = round((hx6.get_weight_mean(readings=5)-8900) / 1000,2) 
+			sen7 = round((hx7.get_weight_mean(readings=5)-7400) / 1000,2)
+			data = [sen1, sen2, sen3, sen4, sen5, sen6, sen7]
 			
-			c.execute('INSERT INTO '+ table +' VALUES(?,?,?,?,?,?,?,?,?);',(sen1, sen2, sen3, sen4, sen5, sen6, sen7, sampWeight, timer));
+			for i in range(0,7):
+					if data[i] < 0:
+						data[i] = 0
+			data.append(sampWeight)
+			data.append(timer)
+			time.sleep(0.5)  
+			
+			c.execute('INSERT INTO '+ table +' VALUES(?,?,?,?,?,?,?,?,?);', tuple(data));
 			conn.commit()
 			if process == False:
 				break
