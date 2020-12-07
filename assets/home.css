@@ -1,7 +1,6 @@
 html {
 	margin: 0px;
 	padding: 0px;
-	overflow: hidden;
 }
 
 body {
@@ -14,12 +13,11 @@ body {
 	display: flex;
 	font-family: sans-serif;
 	height: 100%;
-	overflow: hidden;
 }
 
 .home {
 	display: flex;
-	height: 100vh;
+	height: 100%;
 	width: 100vw;
 	background-color: #2c2f33;
 	margin: 0;

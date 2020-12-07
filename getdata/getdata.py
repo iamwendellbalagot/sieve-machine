@@ -39,14 +39,16 @@ def generateXL(table='test'):
 	weight_retained = [df['S1'].iloc[-1], df['S2'].iloc[-1], df['S3'].iloc[-1], df['S4'].iloc[-1],
 		df['S5'].iloc[-1], df['S6'].iloc[-1], df['S7'].iloc[-1]]
 	data['Weight Retained'] = weight_retained
+	print(data['Weight Retained'].sum())
 	if data['Weight Retained'].sum() > df['Sample_Weight'].iloc[-1]:
 		err = (data['Weight Retained'].sum() - df['Sample_Weight'].iloc[-1]) / 5
-		print(err)
-		new_wr = [df['S1'].iloc[-1], df['S2'].iloc[-1]-err, df['S3'].iloc[-1]-err, df['S4'].iloc[-1]-err,
+		print('DC')
+		weight_retained = [df['S1'].iloc[-1], df['S2'].iloc[-1]-err, df['S3'].iloc[-1]-err, df['S4'].iloc[-1]-err,
 			df['S5'].iloc[-1]-err, df['S6'].iloc[-1]-err, df['S7'].iloc[-1]]
-		data['Weight Retained'] = new_wr
+		data['Weight Retained'] = weight_retained
 	data['Weight Retained'] = (data['Weight Retained'] / df['Sample_Weight'].iloc[-1]) * 100
 	data['Commulative WR %'] = data['Weight Retained'].cumsum()
+	data['Weight Retained Kg'] = weight_retained
 	data['Passing %'] = 100 - data['Commulative WR %']
 	print(data[['Weight Retained', 'Commulative WR %', 'Passing %']])
 	return data

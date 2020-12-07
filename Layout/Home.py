@@ -109,25 +109,25 @@ home = html.Div(
 										html.Li(
 											children=[
 												html.Span('Time: '),
-												html.P('12 minutes')
+												html.P('0 minute/s', id='res__time')
 											]
 										),
 										html.Li(
 											children=[
 												html.Span('Weight of Sample: '),
-												html.P('25 Kg')
+												html.P('0 Kg', id='res__weight')
 											]
 										),
 										html.Li(
 											children=[
 												html.Span('ARTW: '),
-												html.P('97')
+												html.P('0 Kg', id='res__artw')
 											]
 										),
 										html.Li(
 											children=[
-												html.Span('Error: '),
-												html.P('56')
+												html.Span('Error %: '),
+												html.P('0', id='res__err')
 											]
 										)
 									]
@@ -194,7 +194,7 @@ home = html.Div(
 							]
 						),
 						html.Li([
-							html.Span('Sieve 7:'),
+							html.Span('Pan:'),
 							html.P('0.0 kg', id='sieve7')
 						]),
 					]

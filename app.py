@@ -14,6 +14,8 @@ from dash.dash import no_update
 import flask
 from flaskwebgui import FlaskUI
 
+
+
 import getdata.getdata as getdata
 
 from Layout.Home import home
@@ -33,8 +35,9 @@ app = dash.Dash(
 	__name__,
 	server=server
 )
+app.title = 'Sieve Machine'
 
-ui = FlaskUI(server)
+ui = FlaskUI(server, maximized=True)
 
 app.layout = html.Div(
 	className='app',
@@ -87,7 +90,7 @@ def callback__timer (n, inp_time, n_st, table, sampWeight ):
 			io.output(relay, True)
 			time.sleep(5)
 			getdata.process = False
-			getdata.addResult(table=table, sampWeight=inp_sampW, timer=inp_time)
+			getdata.addResult(table=table, sampWeight=sampWeight, timer=inp_time)
 			return str(datetime.timedelta(seconds=inp_time*60 - n)), {'display':'block'}, True
 		if n:
 			return str(datetime.timedelta(seconds=inp_time*60 - n)), no_update, no_update
@@ -112,7 +115,11 @@ def callback__generateData(n_st, inp_id,inp_sampW, inp_timer):
 		raise PreventUpdate()
 
 #GRAPH CALLBACK
-@app.callback(Output('weights__plot', 'figure'),
+@app.callback([Output('weights__plot', 'figure'),
+	 Output('res__time', 'children'),
+	 Output('res__weight', 'children'),
+	 Output('res__artw', 'children'),
+	 Output('res__err', 'children'),],
 	[Input('btn__checkTest', 'n_clicks'),
 	 Input('input__testID', 'value'),
 	 Input('input__checkTest', 'value'),
@@ -125,16 +132,26 @@ def callback__graph(btn_check, test_id, inp_check, n, n_st, btn_export, inp_expo
 	try:
 		if n and n_st == False:
 			print('UPDATING')
-			return pg.get_scatter(df=getdata.get_dataframe(table=test_id))
+			return pg.get_scatter(df=getdata.get_dataframe(table=test_id)), no_update, no_update, no_update, no_update
 		if 'btn__checkTest' in changed_id:
-			return pg.get_scatter(df=getdata.get_dataframe(table=inp_check))
+			df = getdata.get_dataframe(table=inp_check)
+			data = getdata.generateXL(table=inp_check)
+			data = data.round(2)
+			x_bar = ((df['Sample_Weight'].iloc[-1]*(data['Weight Retained'].sum()/100)) + df['Sample_Weight'].iloc[-1]) / 2
+			err_perc = ((x_bar - df['Sample_Weight'].iloc[-1])/ df['Sample_Weight'].iloc[-1]) * 100
+			err_perc = round(abs(err_perc), 1)
+			return pg.get_scatter(df=df), \
+				str(df['Time'].iloc[-1])+' minute/s', str(df['Sample_Weight'].iloc[-1]) +' Kg', \
+				str(round(df['Sample_Weight'].iloc[-1]*(data['Weight Retained'].sum()/100), 1)) + ' Kg', str(err_perc) + ' %'
 		if 'btn__exportTest' in changed_id:
 			#print(inp_export)
 			#print(getdata.generateXL(table=inp_export))
 			data = getdata.generateXL(table=inp_export)
 			data = data.round(2)
+			data = data.drop('Weight Retained', axis=1)
+			data = data[['Coarse Sieve', 'Weight Retained Kg', 'Commulative WR %', 'Passing %']]
 			data.to_csv('./csv_files/' + inp_export + '.csv', index=False, header=True)
-			return no_update
+			return no_update, no_update, no_update, no_update, no_update
 		else:
 			raise PreventUpdate()
 	except:
@@ -185,5 +202,5 @@ def callback__calibrate(btn__calibrate, btn__stopCalib):
 		
 
 if __name__ == '__main__':
-	app.run_server(debug=True)
-	#ui.run()
+	#app.run_server(debug=True)
+	ui.run()

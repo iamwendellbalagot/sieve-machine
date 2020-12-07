@@ -91,6 +91,6 @@ def get_scatter(df=None):
 					paper_bgcolor='rgba(0,0,0,0)',
 					plot_bgcolor='#ccc',
 				    margin=dict(t=50, b=70, l=80, r=1))
-	fig.update_xaxes(title='Time Interval [100ms]')
-	fig.update_yaxes(title='WEIGHT in GRAMS')
+	fig.update_xaxes(title='Time Interval [2000ms]')
+	fig.update_yaxes(title='WEIGHT in KILOGRAMS')
 	return fig

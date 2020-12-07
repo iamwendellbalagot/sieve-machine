@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Sieve Machine
+Exec=cd /home/pi/sieve-machine
+Exec=python3 app.py
+StartupNotify=false
+Terminal = true
