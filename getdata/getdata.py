@@ -71,7 +71,7 @@ def addResult(table, sampWeight, timer):
 			sen6 = sampWeight * (np.random.normal(8.84, 1, 1)[0])/ 100
 			sen7 = sampWeight * (np.random.normal(1.28, 0.5, 1)[0])/ 100
 			
-			data = [sen1, sen2, sen3, sen4, sen5, sen6, sen7]
+			data = [round(sen1,2), round(sen2,2), round(sen3,2), round(sen4,2), round(sen5,2), round(sen6,2), round(sen7,2)]
 			data.append(sampWeight)
 			data.append(timer)
 			c.execute('INSERT INTO '+ table +' VALUES(?,?,?,?,?,?,?,?,?);', tuple(data));
