@@ -4,7 +4,7 @@ A software to analyze and study the weight of aggregate retained through a numbe
 
 ## Key features
   * Realtime data plotting
-  * Transfer the saved data on bluetooth
+  * Transfer the saved data in bluetooth
   * Export the data as CSV file
   * Export data visualization plots
   
